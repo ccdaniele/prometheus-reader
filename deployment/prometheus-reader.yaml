@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preader-deployment
+  labels:
+    app: prometheus-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-reader
+  template:
+    metadata:
+      labels:
+        app: prometheus-reader
+    spec:
+      containers:
+      - name: prometheus-reader
+        image: ccdaniele/promfile-reader:v1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 15090
