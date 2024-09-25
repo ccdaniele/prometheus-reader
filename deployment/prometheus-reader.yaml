@@ -14,6 +14,29 @@ spec:
     metadata:
       labels:
         app: prometheus-reader
+      # annotations:
+        # ad.datadoghq.com/prometheus-reader.checks: |
+        #   {
+        #     "envoy": {
+        #       "init_config": {},
+        #       "instances": [{"openmetrics_endpoint: http://%%host%%:15090/metrics"}]
+        #     }
+        #   }
+        # ad.datadoghq.com/prometheus-reader.checks: |
+        #           {
+        #             "openmetrics": {
+        #               "instances": [
+        #                 {
+        #                   "openmetrics_endpoint": "http://%%host%%:15090/metrics",
+        #                   "namespace": "envoy_test",
+        #                   "metrics": [
+        #                       ".*"
+        #                     ],
+        #                   "max_returned_metrics": 15000  
+        #                 }
+        #               ]
+        #             }
+        #           }     
     spec:
       containers:
       - name: prometheus-reader
@@ -21,3 +44,16 @@ spec:
         imagePullPolicy: Always
         ports:
           - containerPort: 15090
+            name: preader-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: preader-svc
+spec:
+  selector:
+    app: prometheus-reader
+  ports:
+  - port: 15090
+    targetPort: preader-port
