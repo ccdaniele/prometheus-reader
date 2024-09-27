@@ -594,12 +594,6 @@ datadog:
   ## ref: https://github.com/DataDog/datadog-agent/tree/main/Dockerfiles/agent#optional-volumes
   ## ref: https://docs.datadoghq.com/agent/autodiscovery/
   confd: 
-    # envoy.yaml: |-
-    #   ad_identifiers:
-    #     - prometheus-reader
-    #   init_config:
-    #   instances:
-    #     - openmetrics_endpoint: "http://%%host%%:15090/metrics" 
     # postgres.yaml: |-
     #   init_config:
     #   instances:
